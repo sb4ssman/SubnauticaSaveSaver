@@ -39,10 +39,10 @@ if os.path.exists(settings_path):
 # Verify paths
 def verify_paths():
     if not os.path.exists(settings['game_save_folder']):
-        print(f"Game save folder not found: {settings['game_save_folder']}")
+        # print(f"Game save folder not found: {settings['game_save_folder']}")
         return False
     if not os.path.exists(settings['target_folder']):
-        print(f"Target folder not found: {settings['target_folder']}")
+        # print(f"Target folder not found: {settings['target_folder']}")
         return False
     return True
 
@@ -57,8 +57,41 @@ def on_settings(icon, item):
 def on_about(icon, item):
     messagebox.showinfo(
         "About",
-        "Stacey's Super Stealthy\nSubnautica Save Saver\nVersion 1.0\n\nBecause Subnautica just didn't\nsave the saves files enough."
+        """
+        Stacey's Super Stealthy
+        Subnautica Save Saver
+        Version 1.0
+
+        Because Subnautica does not
+        save the saves enough.
+
+        Set the Subnautica Save Folder
+        and the target save directory
+        in the settings.
+
+        Stacey's Saver leaves a callback
+        in the system to be notified of
+        changes, and copies files when
+        Subnautica saves them.
+        """
     )
+
+# def on_about(icon, item):
+#     messagebox.showinfo(
+#         "About",
+#         "Stacey's Super Stealthy\n" \
+#         "Subnautica Save Saver\n" \
+#         "Version 1.0\n\n" \
+#         "Because Subnautica does not\n" \
+#         "save the saves enough.\n\n" \
+#         "Set the Subnautica Save Folder\n" \
+#         "and the target save directory\n" \
+#         "in the settings.\n\n" \
+#         "Stacey's Saver leaves a callback\n" \
+#         "in the system to be notified of\n" \
+#         "changes, and copies files when\n" \
+#         "Subnautica saves them."
+#     )
 
 def on_duplicate_save_now(icon, item):
     duplicate_latest_save()
@@ -131,7 +164,7 @@ menu = (
 )
 
 # Create the system tray icon
-icon = pystray.Icon("subnautica_save_manager", create_image(), "Subnautica Save Manager", menu)
+icon = pystray.Icon("subnautica_save_manager", create_image(), "Stacey's Super Stealthy\nSubnautica Save Saver", menu)
 
 # File system event handler
 class SaveHandler(FileSystemEventHandler):
@@ -169,12 +202,12 @@ def open_settings_window():
     
     tk.Label(settings_window, text="Game Save Folder:").pack()
     game_save_folder_var = tk.StringVar(value=settings['game_save_folder'])
-    tk.Entry(settings_window, textvariable=game_save_folder_var, width=50).pack()
+    tk.Entry(settings_window, textvariable=game_save_folder_var, width=100).pack()
     tk.Button(settings_window, text="Browse", command=lambda: game_save_folder_var.set(filedialog.askdirectory())).pack()
 
     tk.Label(settings_window, text="Target Folder:").pack()
     target_folder_var = tk.StringVar(value=settings['target_folder'])
-    tk.Entry(settings_window, textvariable=target_folder_var, width=50).pack()
+    tk.Entry(settings_window, textvariable=target_folder_var, width=100).pack()
     tk.Button(settings_window, text="Browse", command=lambda: target_folder_var.set(filedialog.askdirectory())).pack()
 
     tk.Button(settings_window, text="Save", command=save_settings).pack()
@@ -211,7 +244,7 @@ if verify_paths():
     observer.schedule(event_handler, settings['game_save_folder'], recursive=False)
     observer.start()
 else:
-    print("Paths are not set or invalid. Please set the paths using the Settings menu.")
+    messagebox.showinfo("Failure!", "Paths are not set or invalid.\nPlease set the paths using the Settings menu.")
 
 if __name__ == "__main__":
     try:

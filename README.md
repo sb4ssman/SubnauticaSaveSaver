@@ -1,4 +1,4 @@
-# Stacey's Super Stealthy Subnautica Save Saver
+# SK's Super Stealthy Subnautica Save Saver
 
 This application helps manage and backup Subnautica game saves automatically. It runs silently in the background, monitoring save changes and copying them to a specified directory.
 

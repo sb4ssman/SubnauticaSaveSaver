@@ -5,7 +5,7 @@ Created on Sat Jun 29 22:07:11 2024
 @author: Thomas
 """
 
-# Stacey's Super Stealthy Subnautica Save Saver
+# SK's Super Stealthy Subnautica Save Saver
 # Runs in your system tray and copies your Subnautica saves to a separate folder appending timestamps to the name.
 # Uses a Windows observer to trigger events so it's not chewing through cpu.
 # The presence in the tray is so you know it's running, and to interact with the saves it manages. 
@@ -160,7 +160,7 @@ menu = (
 )
 
 # Create the system tray icon
-icon = pystray.Icon("subnautica_save_manager", create_image(), "Stacey's Super Stealthy\nSubnautica Save Saver", menu)
+icon = pystray.Icon("subnautica_save_manager", create_image(), "Sk's Super Stealthy\nSubnautica Save Saver", menu)
 
 
 

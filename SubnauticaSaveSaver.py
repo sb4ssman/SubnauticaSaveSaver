@@ -36,19 +36,40 @@ saves_dir = os.path.join(app_directory, "Saves")
 if not os.path.exists(saves_dir):
     os.makedirs(saves_dir)
 
-# Default Settings
-default_settings = {
-    'game_save_folder': os.path.join(os.getenv('APPDATA'), 'Unknown Worlds', 'Subnautica'),
-    'target_folder': os.path.join(app_directory, 'Saves')
-}
-settings = {}
 
-# Load settings from file
+# The default is in an inconvenient spot
+def get_subnautica_save_path():
+    appdata = os.environ.get('APPDATA')
+    locallow_path = os.path.normpath(os.path.join(os.path.dirname(appdata), 'LocalLow'))
+    subnautica_path = os.path.normpath(os.path.join(locallow_path, 'Unknown Worlds', 'Subnautica'))
+    return subnautica_path
+
+# Print the result for verification
+# print(f"Subnautica save path: {get_subnautica_save_path()}")
+
+# Default settings with correct paths
+default_settings = {
+    'game_save_folder': get_subnautica_save_path(),
+    'target_folder': saves_dir
+}
+
+# Load or write settings.json
 if os.path.exists(settings_path):
-    with open(settings_path, 'r') as f:
-        settings.update(json.load(f))
+    try:
+        with open(settings_path, 'r') as f:
+            loaded_settings = json.load(f)
+            settings['game_save_folder'] = os.path.normpath(loaded_settings.get('game_save_folder', default_settings['game_save_folder']))
+            settings['target_folder'] = os.path.normpath(loaded_settings.get('target_folder', default_settings['target_folder']))
+    except:
+        settings = default_settings
+        with open(settings_path, 'w') as f:
+            json.dump(default_settings, f, indent=4)
 else:
     settings = default_settings
+    with open(settings_path, 'w') as f:
+        json.dump(default_settings, f, indent=4) #
+
+
 
 # Verify paths
 def verify_paths():
@@ -78,13 +99,13 @@ def on_about(icon, item):
         save the saves enough.
 
         Set the Subnautica Save Folder
-        and the target save directory
-        in the settings.
+        and the backup directory in the
+        settings.
 
         SK's Saver leaves a callback
         in the system to be notified of
-        changes, and copies files when
-        Subnautica saves them.
+        changes to player.log, and copies
+        it when Subnautica saves it.
         """
     )
 
@@ -151,11 +172,11 @@ def create_image():
 
 # Define menu items
 menu = (
+    item('Duplicate Save Now!', on_duplicate_save_now),
     item('Open both Folders...', on_open_folders),
+    item('Restore from List...', on_restore_from_list),
     item('Settings...', on_settings),
     item('About...', on_about),
-    item('Duplicate Save Now!', on_duplicate_save_now),
-    item('Restore from List...', on_restore_from_list),
     item('Quit', on_quit)
 )
 
@@ -229,7 +250,7 @@ def open_restore_window():
     for save_file in os.listdir(saves_dir):
         save_listbox.insert(tk.END, save_file)
 
-    tk.Button(restore_window, text="Restore", command=restore_save).pack()
+    tk.Button(restore_window, text="Restore Selected to Live Game Folder", command=restore_save).pack()
     restore_window.mainloop()
 
 # Initialize observer globally

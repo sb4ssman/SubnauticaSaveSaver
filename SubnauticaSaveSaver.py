@@ -10,7 +10,7 @@ Created on Sat Jun 29 22:07:11 2024
 # Uses a Windows observer to trigger events so it's not chewing through cpu.
 # The presence in the tray is so you know it's running, and to interact with the saves it manages. 
 
-
+VERSION="1.0"
 
 import os
 import shutil
@@ -69,10 +69,10 @@ def on_settings(icon, item):
 def on_about(icon, item):
     messagebox.showinfo(
         "About",
-        """
-        Stacey's Super Stealthy
+        f"""
+        SK's Super Stealthy
         Subnautica Save Saver
-        Version 1.0
+        Version {VERSION}
 
         Because Subnautica does not
         save the saves enough.
@@ -81,7 +81,7 @@ def on_about(icon, item):
         and the target save directory
         in the settings.
 
-        Stacey's Saver leaves a callback
+        SK's Saver leaves a callback
         in the system to be notified of
         changes, and copies files when
         Subnautica saves them.

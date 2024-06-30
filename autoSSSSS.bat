@@ -1,7 +1,7 @@
 @echo off
 
 rem Change directory to where your Python script is located
-cd /d "C:\Users\tmill\Documents\GitHub\SubnauticaSaveSaver"
+cd /d "%USERPROFILE%\Documents\GitHub\SubnauticaSaveSaver"
 
 rem Ensure the log directory exists
 if not exist logs mkdir logs

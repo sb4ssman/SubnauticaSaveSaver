@@ -5,6 +5,13 @@ Created on Sat Jun 29 22:07:11 2024
 @author: Thomas
 """
 
+# Stacey's Super Stealthy Subnautica Save Saver
+# Runs in your system tray and copies your Subnautica saves to a separate folder appending timestamps to the name.
+# Uses a Windows observer to trigger events so it's not chewing through cpu.
+# The presence in the tray is so you know it's running, and to interact with the saves it manages. 
+
+
+
 import os
 import shutil
 import time
@@ -17,11 +24,9 @@ import pystray
 from pystray import MenuItem as item
 from PIL import Image, ImageDraw
 
-# Settings placeholder
-settings = {
-    'game_save_folder': r'C:\Users\tmill\AppData\LocalLow\Unknown Worlds\Subnautica',
-    'target_folder': r'C:\Users\tmill\Documents\SubnauticaSaveSaver\Saves'
-}
+
+
+
 
 # Directories setup
 app_directory = os.path.dirname(os.path.abspath(__file__))
@@ -31,18 +36,25 @@ saves_dir = os.path.join(app_directory, "Saves")
 if not os.path.exists(saves_dir):
     os.makedirs(saves_dir)
 
+# Default Settings
+default_settings = {
+    'game_save_folder': os.path.join(os.getenv('APPDATA'), 'Unknown Worlds', 'Subnautica'),
+    'target_folder': os.path.join(app_directory, 'Saves')
+}
+settings = {}
+
 # Load settings from file
 if os.path.exists(settings_path):
     with open(settings_path, 'r') as f:
         settings.update(json.load(f))
+else:
+    settings = default_settings
 
 # Verify paths
 def verify_paths():
     if not os.path.exists(settings['game_save_folder']):
-        # print(f"Game save folder not found: {settings['game_save_folder']}")
         return False
     if not os.path.exists(settings['target_folder']):
-        # print(f"Target folder not found: {settings['target_folder']}")
         return False
     return True
 
@@ -76,22 +88,6 @@ def on_about(icon, item):
         """
     )
 
-# def on_about(icon, item):
-#     messagebox.showinfo(
-#         "About",
-#         "Stacey's Super Stealthy\n" \
-#         "Subnautica Save Saver\n" \
-#         "Version 1.0\n\n" \
-#         "Because Subnautica does not\n" \
-#         "save the saves enough.\n\n" \
-#         "Set the Subnautica Save Folder\n" \
-#         "and the target save directory\n" \
-#         "in the settings.\n\n" \
-#         "Stacey's Saver leaves a callback\n" \
-#         "in the system to be notified of\n" \
-#         "changes, and copies files when\n" \
-#         "Subnautica saves them."
-#     )
 
 def on_duplicate_save_now(icon, item):
     duplicate_latest_save()
@@ -155,16 +151,18 @@ def create_image():
 
 # Define menu items
 menu = (
-    item('Open Folders', on_open_folders),
-    item('Settings', on_settings),
-    item('About', on_about),
-    item('Duplicate Save Now', on_duplicate_save_now),
-    item('Restore from List', on_restore_from_list),
+    item('Open both Folders...', on_open_folders),
+    item('Settings...', on_settings),
+    item('About...', on_about),
+    item('Duplicate Save Now!', on_duplicate_save_now),
+    item('Restore from List...', on_restore_from_list),
     item('Quit', on_quit)
 )
 
 # Create the system tray icon
 icon = pystray.Icon("subnautica_save_manager", create_image(), "Stacey's Super Stealthy\nSubnautica Save Saver", menu)
+
+
 
 # File system event handler
 class SaveHandler(FileSystemEventHandler):
@@ -198,19 +196,19 @@ def open_settings_window():
         settings_window.destroy()
 
     settings_window = tk.Tk()
-    settings_window.title("Settings")
+    settings_window.title("Subnautica Save Saver Settings")
     
-    tk.Label(settings_window, text="Game Save Folder:").pack()
+    tk.Label(settings_window, text="Game Save Folder:").pack(anchor="w")
     game_save_folder_var = tk.StringVar(value=settings['game_save_folder'])
     tk.Entry(settings_window, textvariable=game_save_folder_var, width=100).pack()
     tk.Button(settings_window, text="Browse", command=lambda: game_save_folder_var.set(filedialog.askdirectory())).pack()
 
-    tk.Label(settings_window, text="Target Folder:").pack()
+    tk.Label(settings_window, text="Target Folder:").pack(anchor="w")
     target_folder_var = tk.StringVar(value=settings['target_folder'])
     tk.Entry(settings_window, textvariable=target_folder_var, width=100).pack()
-    tk.Button(settings_window, text="Browse", command=lambda: target_folder_var.set(filedialog.askdirectory())).pack()
+    tk.Button(settings_window, text="Browse", command=lambda: target_folder_var.set(filedialog.askdirectory())).pack(pady=(0,5))
 
-    tk.Button(settings_window, text="Save", command=save_settings).pack()
+    tk.Button(settings_window, text="Save", command=save_settings).pack(pady=(0, 5))
     settings_window.mainloop()
 
 # Open restore window
@@ -246,6 +244,9 @@ if verify_paths():
 else:
     messagebox.showinfo("Failure!", "Paths are not set or invalid.\nPlease set the paths using the Settings menu.")
 
+
+
+# Start the Icon; stop the observer
 if __name__ == "__main__":
     try:
         icon.run()

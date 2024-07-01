@@ -57,7 +57,7 @@
     exit /b
     ```
 
-2. Place the batch file in your startup folder:
+2. Place the batch file in your startup folder (or anywhere as a proxy to run the Saver):
     - Press `Win + R`, type `shell:startup`, and press Enter.
     - Copy the `run_app.bat` file into this folder.
 

@@ -1,7 +1,7 @@
 # SK's Super Stealthy Subnautica Save Saver
 
 ## Introduction
-"SK's Super Stealthy Subnautica Save Saver" is a Python application designed to monitor and back up Subnautica save files automatically. This ensures that your progress is always safe, even if something goes wrong, and removes the tediousness of digging around int he folders and copying stuff yourself.
+"SK's Super Stealthy Subnautica Save Saver" is a Python application designed to monitor and back up Subnautica save files automatically. This ensures that your progress is always safe, even if something goes wrong, and removes the tediousness of digging around in the folders and copying stuff yourself.
 
 ## Features
 - **Automatic Backup**: Monitors the Subnautica save folder and automatically backs up your saves.

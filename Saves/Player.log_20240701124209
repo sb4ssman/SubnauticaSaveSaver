@@ -1,0 +1,570 @@
+Mono path[0] = 'B:/Steam/steamapps/common/Subnautica/Subnautica_Data/Managed'  
+Mono config path = 'B:/Steam/steamapps/common/Subnautica/MonoBleedingEdge/etc'
+Initialize engine version: 2019.4.36f1 (870)
+[Subsystems] Discovering subsystems at path B:/Steam/steamapps/common/Subnautica/Subnautica_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 765M (ID=0x11e2)
+    Vendor:   
+    VRAM:     2009 MB
+    Driver:   25.21.14.2531
+Begin MonoManager ReloadAssembly
+- Completed reload, in  0.293 seconds
+OnLevelWasLoaded was found on OVRScreenFade
+This message has been deprecated and will be removed in a later version of Unity.
+Add a delegate to SceneManager.sceneLoaded instead to get notifications after scene loading has completed 
+(Filename:  Line: 369)
+
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.516600 ms
+AddressablesUtility.LoadSceneAsync loading scene: StartScreen in mode Single 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 55)
+UnloadTime: 1.836800 ms
+Initializing Steam services 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+OnQuit behaviour queued for deferred registering, platform services aren't initialized. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+DontDestroyOnLoad only works for root GameObjects or components on root GameObjects. 
+(Filename:  Line: 606)
+
+Missing platform services, returning default UI scale. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Missing platform services, returning default UI scale. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: MenuEnvironment in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 4235.
+Total: 16.287600 ms (FindLiveObjects: 0.213300 ms CreateObjectMapping: 0.108800 ms MarkObjects: 15.941100 ms  DeleteObjects: 0.024000 ms)
+
+Waiting for slot0000 to load... 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Telemetry session started. Platform: 'Steam', UserId: '76561198137430564', SessionId: 383388706 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+RegisterSaveGame: Loading GameInfo for slot0000 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loading game settings 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: XMenu in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+changeset 71288, QualityLevel = 2 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+OK Running Win64 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Application version: 1.21.71288 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+SystemInfo: 
+ deviceModel = Unknown (CYBERPOWER Corporation)
+ deviceName = THET-1000
+ deviceType = Desktop
+ deviceUniqueIdentifier = 244c4a4fab74a00d4f31dae09912d6c160a4815c
+ graphicsDeviceID = 4578
+ graphicsDeviceName = NVIDIA GeForce GTX 765M
+ graphicsDeviceType = Direct3D11
+ graphicsDeviceVendor = NVIDIA
+ graphicsDeviceVendorID = 4318
+ graphicsDeviceVersion = Direct3D 11.0 [level 11.0]
+ graphicsMemorySize = 2009
+ graphicsShaderLevel = 50
+ npotSupport = Full
+ maxTextureSize = 16384
+ operatingSystem = Windows 10  (10.0.19045) 64bit
+ processorCount = 8
+ processorFrequency = 2394
+ processorType = Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz
+ supportedRenderTargetCount = 8
+ supports3DTextures = True
+ supportsAccelerometer = False
+ supportsComputeShaders = True
+ supportsGyroscope = False
+ supportsImageEffects = True
+ supportsInstancing = True
+ supportsLocationService = False
+ supportsRawShadowDepthSampling = True
+ supportsRenderTextures = True
+ supportsRenderToCubemap = True
+ supportsShadows = True
+ supportsSparseTextures = True
+ supportsStencil = 1
+ supportsVibration = False
+ systemMemorySize = 16304
+ 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SaveFilesLoad' took 0.20 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+--- UpgradeBatches : changeSet 71288 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 17205 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 18740 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 19954 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 21939 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 23031 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 25020 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 26110 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 27086 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 28983 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 31051 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 32370 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 33385 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 36610 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 38130 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 39967 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 41907 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 42236 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 43575 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 45274 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 47157 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 47572 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 49833 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 52143 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 53475 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 54761 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 57467 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 61960 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 63403 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 70752 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+    checking upgrade version 71172 - wants upgrade? False 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'FadeInDummy' took 0.30 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: Main in mode Single 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 278)
+UnloadTime: 14.802800 ms
+Unloading asset bundle 'logos' because it is no longer referenced 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SceneMain' took 2.35 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+
+Unloading 368 unused Assets to reduce memory usage. Loaded Objects now: 54008.
+Total: 73.906700 ms (FindLiveObjects: 5.059700 ms CreateObjectMapping: 2.933300 ms MarkObjects: 65.573600 ms  DeleteObjects: 0.339500 ms)
+
+AddressablesUtility.LoadSceneAsync loading scene: Essentials in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Heartbeat CSV, time s,10.75554, GC.GetTotalMemory MB,53.91406, OctNodes MB,0, CompactOctrees MB,16.625, CellManager MB,0, ClipMapManager MB,-9.536743E-07, GCCount,100, PlayerPos,2.078138,3.397397,-0.686676 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: Cyclops in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SceneEssentials' took 0.88 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Cyclops::Awake frame 822 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Streamer not ready for __LIGHTMAPPED_PREFAB__ 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PrefabDatabase::LoadPrefabDatabase(count: 3336) 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Caching tech types for 3336 prefabs 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SceneCyclops' took 1.33 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Loading lightmapped prefab scene Cyclops total ms: 1327.853 self ms: 1327.854 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loaded lightmapped prefab Cyclops frame 823 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: EscapePod in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SceneEscapePod' took 0.22 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Loading lightmapped prefab scene EscapePod total ms: 219.9536 self ms: 219.9538 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loaded lightmapped prefab EscapePod frame 830 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: Aurora in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'SceneAurora' took 1.41 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Loading lightmapped prefab scene Aurora total ms: 1415.854 self ms: 1415.854 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loaded lightmapped prefab Aurora frame 873 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PAXTerrainController::Initialize called - frame = 873 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'Builder' took 9.98 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PAXTerrainController::MountWorld frame 1189 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+builders ready, building world.. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+loading static world at 'B:/Steam/steamapps/common/Subnautica/Subnautica_Data/StreamingAssets\SNUnmanagedData\Build18'. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+World in B:/Steam/steamapps/common/Subnautica/Subnautica_Data/StreamingAssets\SNUnmanagedData\Build18 is from version 39 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorld: Loading world. Frame 1191. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorld land 'Voxeland (Voxeland)' 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorldStreamer::Deinitialize called, frame 1191 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorldStreamer::Initialize frame 1191 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Read streaming settings:
+max frame ms 10, skip ents False, budget 200 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorldStreamer allocated space for 26,20,26 octree batches 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorldStreamer is disabling grass! Either override disable is on, or this is a standalone build 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Calling LoadPrefabDatabase frame 1191 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PrefabDatabase::LoadPrefabDatabase(count: 3336) 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L1: Initialize prefab database (WorldEntities) total ms: 5.2781 self ms: 5.2782 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L1: SaveLoadManager.Initialize total ms: 3.0668 self ms: 3.0669 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L1: Create worker thread total ms: 1.2721 self ms: 1.2722 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Streamer initialize total ms: 27.4041 self ms: 17.619 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: cellManager.ResetEntityDistributions total ms: 36.8285 self ms: 36.8286 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+initializing first time explosion 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: LoadSceneObjects total ms: 816.5399 self ms: 816.5401 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: LoadGlobalRoot total ms: 2.7022 self ms: 2.7024 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+loading palette for LargeWorld at 'BlockPrefabs'. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Loading palette total ms: 631.5014 self ms: 631.5015 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+biome map downsample factor: 4 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Loading biome map total ms: 5.6238 self ms: 5.624 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorld: calling land.Rebuild frame 1212 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: Rebuilding land total ms: 14.0701 self ms: 14.0702 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+OK world mounted: B:/Steam/steamapps/common/Subnautica/Subnautica_Data/StreamingAssets\SNUnmanagedData\Build18 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'WorldMount' took 2.11 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loading world tiles 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+cam batch 11,18,12, loading bounds 10,17,11 -> 12,19,13, total 27 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+loading 27 batches 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'WorldTiles' took 3.22 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loading cells 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'Octrees' took 0.00 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'Terrain' took 0.00 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'Clipmap' took 1.48 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'UpdatingVisibility' took 0.00 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'EntityCells' took 12.23 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LoadAsync Done 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LOADING FINISHED 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PerformGarbageAndAssetCollection, Time.time=10.75554, Time.frameCount=1566, DateTime.Now=07/01/2024 12:40:27 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: PerformGarbageCollection -> GC.Collect total ms: 0.0809 self ms: 0.0809 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'WorldSettle' took 0.00 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+'Root' took 33.42 seconds 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loading stage durations:
+SaveFilesLoad,SceneMain,SceneEssentials,SceneCyclops,SceneEscapePod,SceneAurora,Builder,WorldMount,WorldTiles,Batches,Octrees,Terrain,Clipmap,UpdatingVisibility,EntityCells,WorldSettle,Equipment
+0.199,2.354,0.879,1.328,0.220,1.415,9.983,2.110,3.216,,0.000,0.000,1.480,0.000,12.228,0.000,
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 1434)
+
+Unloading 4407 unused Assets to reduce memory usage. Loaded Objects now: 163237.
+Total: 455.844300 ms (FindLiveObjects: 14.298300 ms CreateObjectMapping: 13.085200 ms MarkObjects: 423.903300 ms  DeleteObjects: 4.557100 ms)
+
+--- PerformGarbageAndAssetCollectionAsync: GC Time 33.1559 Asset GC Time 463.1115 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+PerformGarbageAndAssetCollection, Time.time=16.50788, Time.frameCount=1696, DateTime.Now=07/01/2024 12:40:35 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+L0: PerformGarbageCollection -> GC.Collect total ms: 0.0027 self ms: 0.0029 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 1434)
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 163277.
+Total: 427.149900 ms (FindLiveObjects: 9.294900 ms CreateObjectMapping: 8.253400 ms MarkObjects: 409.391300 ms  DeleteObjects: 0.209900 ms)
+
+--- PerformGarbageAndAssetCollectionAsync: GC Time 56.1418 Asset GC Time 485.2039 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Saving 27 batches to C:/ProgramData/Unknown Worlds/Subnautica\TempSave\tmp761049 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadScene loading scene: Cleaner in mode Single 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 1436)
+Time played: 47s 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Max depth: 0m 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Distance traveled: 191m 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+LargeWorldStreamer::Deinitialize called, frame 1782 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Resetting cell with 1 waiters Cell 4,3,1 (level 1, batch 10,18,12, state IsAsleep) 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Resetting cell with 1 waiters Cell 8,9,1 (level 0, batch 11,18,13, state IsAsleep) 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+UnloadTime: 184.323300 ms
+[FMOD] Please add an 'FMOD Studio Listener' component to your a camera in the scene for correct 3D positioning of sounds. 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+
+Unloading 751 unused Assets to reduce memory usage. Loaded Objects now: 25244.
+Total: 70.907700 ms (FindLiveObjects: 1.547000 ms CreateObjectMapping: 3.382200 ms MarkObjects: 64.194400 ms  DeleteObjects: 1.783600 ms)
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 542)
+AddressablesUtility.LoadSceneAsync loading scene: StartScreen in mode Single 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+
+Unloading 0 unused Assets to reduce memory usage. Loaded Objects now: 25244.
+Total: 69.916500 ms (FindLiveObjects: 2.023000 ms CreateObjectMapping: 2.833400 ms MarkObjects: 65.009400 ms  DeleteObjects: 0.050100 ms)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 548)
+UnloadTime: 0.510600 ms
+AddressablesUtility.LoadSceneAsync loading scene: MenuEnvironment in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+
+Unloading 53 unused Assets to reduce memory usage. Loaded Objects now: 25356.
+Total: 62.159600 ms (FindLiveObjects: 1.406000 ms CreateObjectMapping: 1.843500 ms MarkObjects: 58.819500 ms  DeleteObjects: 0.089900 ms)
+
+Waiting for slot0000 to load... 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+RegisterSaveGame: Loading GameInfo for slot0000 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Loading game settings 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+AddressablesUtility.LoadSceneAsync loading scene: XMenu in mode Additive 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+changeset 71288, QualityLevel = 2 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+OK Running Win64 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Application version: 1.21.71288 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+SystemInfo: 
+ deviceModel = Unknown (CYBERPOWER Corporation)
+ deviceName = THET-1000
+ deviceType = Desktop
+ deviceUniqueIdentifier = 244c4a4fab74a00d4f31dae09912d6c160a4815c
+ graphicsDeviceID = 4578
+ graphicsDeviceName = NVIDIA GeForce GTX 765M
+ graphicsDeviceType = Direct3D11
+ graphicsDeviceVendor = NVIDIA
+ graphicsDeviceVendorID = 4318
+ graphicsDeviceVersion = Direct3D 11.0 [level 11.0]
+ graphicsMemorySize = 2009
+ graphicsShaderLevel = 50
+ npotSupport = Full
+ maxTextureSize = 16384
+ operatingSystem = Windows 10  (10.0.19045) 64bit
+ processorCount = 8
+ processorFrequency = 2394
+ processorType = Intel(R) Core(TM) i7-4700MQ CPU @ 2.40GHz
+ supportedRenderTargetCount = 8
+ supports3DTextures = True
+ supportsAccelerometer = False
+ supportsComputeShaders = True
+ supportsGyroscope = False
+ supportsImageEffects = True
+ supportsInstancing = True
+ supportsLocationService = False
+ supportsRawShadowDepthSampling = True
+ supportsRenderTextures = True
+ supportsRenderToCubemap = True
+ supportsShadows = True
+ supportsSparseTextures = True
+ supportsStencil = 1
+ supportsVibration = False
+ systemMemorySize = 16304
+ 
+(Filename: U:\unity1\Runtime/Export/Debug/Debug.bindings.h Line: 39)
+
+Setting up 4 worker threads for Enlighten.
+  Thread -> id: 5a20 -> priority: 1 
+  Thread -> id: 5a1c -> priority: 1 
+  Thread -> id: 5a28 -> priority: 1 
+  Thread -> id: 5a24 -> priority: 1 
+ 
+(Filename:  Line: -1)
+
+ 
+(Filename:  Line: -1)
+

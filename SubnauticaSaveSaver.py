@@ -53,13 +53,15 @@ default_settings = {
     'target_folder': saves_dir
 }
 
+
 # Load or write settings.json
 if os.path.exists(settings_path):
     try:
         with open(settings_path, 'r') as f:
             loaded_settings = json.load(f)
-            settings['game_save_folder'] = os.path.normpath(loaded_settings.get('game_save_folder', default_settings['game_save_folder']))
-            settings['target_folder'] = os.path.normpath(loaded_settings.get('target_folder', default_settings['target_folder']))
+            loaded_settings['game_save_folder'] = os.path.normpath(loaded_settings.get('game_save_folder', default_settings['game_save_folder']))
+            loaded_settings['target_folder'] = os.path.normpath(loaded_settings.get('target_folder', default_settings['target_folder']))
+            settings = loaded_settings
     except:
         settings = default_settings
         with open(settings_path, 'w') as f:

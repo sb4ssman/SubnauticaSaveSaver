@@ -2,7 +2,7 @@
 """
 Created on Sat Jun 29 22:07:11 2024
 
-@author: Thomas
+@author: sb4ssman
 """
 
 # SK's Super Stealthy Subnautica Save Saver
@@ -11,6 +11,13 @@ Created on Sat Jun 29 22:07:11 2024
 # The presence in the tray is so you know it's running, and to interact with the saves it manages. 
 
 VERSION="1.0"
+
+# NOTES to the developer:
+    # logic for game location detection, 
+
+
+
+
 
 import os
 import shutil
@@ -30,46 +37,49 @@ from PIL import Image, ImageDraw
 
 # Directories setup
 app_directory = os.path.dirname(os.path.abspath(__file__))
-settings_path = os.path.join(app_directory, 'settings.json')
+settings_file = os.path.join(app_directory, 'settings.json')
 saves_dir = os.path.join(app_directory, "Saves")
 
 if not os.path.exists(saves_dir):
     os.makedirs(saves_dir)
 
 
-# The default is in an inconvenient spot
-def get_subnautica_save_path():
-    appdata = os.environ.get('APPDATA')
-    locallow_path = os.path.normpath(os.path.join(os.path.dirname(appdata), 'LocalLow'))
-    subnautica_path = os.path.normpath(os.path.join(locallow_path, 'Unknown Worlds', 'Subnautica'))
-    return subnautica_path
+# The default save locations are inconvenient and plural
+def detect_save_path():
+    # Possible paths for Steam and Epic Games installations
+    steam_paths = [
+        os.path.normpath(os.path.join('C:', 'Program Files', 'Steam', 'steamapps', 'common', 'Subnautica', 'SNAppData', 'SavedGames')),
+        os.path.normpath(os.path.join('C:', 'Program Files (x86)', 'Steam', 'steamapps', 'common', 'Subnautica', 'SNAppData', 'SavedGames'))
+    ]
+    epic_games_path = os.path.normpath(os.path.join(os.getenv('APPDATA'), '..', 'LocalLow', 'Unknown Worlds', 'Subnautica', 'Subnautica', 'SavedGames'))
 
-# Print the result for verification
-# print(f"Subnautica save path: {get_subnautica_save_path()}")
+    # Check if the paths exist
+    for path in steam_paths:
+        if os.path.exists(path):
+            return path
+    if os.path.exists(epic_games_path):
+        return epic_games_path
+
+    # Return None if no valid path is found
+    return None
 
 # Default settings with correct paths
 default_settings = {
-    'game_save_folder': get_subnautica_save_path(),
+    'game_save_folder': detect_save_path(),
     'target_folder': saves_dir
 }
 
 
 # Load or write settings.json
-if os.path.exists(settings_path):
-    try:
-        with open(settings_path, 'r') as f:
-            loaded_settings = json.load(f)
-            loaded_settings['game_save_folder'] = os.path.normpath(loaded_settings.get('game_save_folder', default_settings['game_save_folder']))
-            loaded_settings['target_folder'] = os.path.normpath(loaded_settings.get('target_folder', default_settings['target_folder']))
-            settings = loaded_settings
-    except:
-        settings = default_settings
-        with open(settings_path, 'w') as f:
-            json.dump(default_settings, f, indent=4)
-else:
-    settings = default_settings
-    with open(settings_path, 'w') as f:
-        json.dump(default_settings, f, indent=4) #
+def load_settings():
+    if os.path.exists(settings_file):
+        with open(settings_file, 'r') as f:
+            return json.load(f)
+    else:
+        with open(settings_file, 'w') as f:
+            json.dump(default_settings, f, indent=4) # Write default to settings.json
+
+        return default_settings
 
 
 
@@ -267,6 +277,18 @@ if verify_paths():
 else:
     messagebox.showinfo("Failure!", "Paths are not set or invalid.\nPlease set the paths using the Settings menu.")
 
+
+def main():
+    settings = load_settings()
+    
+    # Ensure paths are properly formatted
+    settings['game_save_folder'] = os.path.normpath(settings['game_save_folder'])
+    settings['target_folder'] = os.path.normpath(settings['target_folder'])
+    save_settings(settings)
+
+    root = tk.Tk()
+    root.withdraw()
+    create_tray_icon()
 
 
 # Start the Icon; stop the observer

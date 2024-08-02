@@ -162,7 +162,7 @@ class TrayHelper:
         }
         
         if sys.platform == 'win32':
-            icon_params['on_double_click'] = self.manager.show_status_window
+            icon_params['on_double_click'] = lambda icon, item: self.manager.show_status_window()
         
         self.icon = pystray.Icon(**icon_params)
 
@@ -961,13 +961,13 @@ changes to player.log, and copies it when Subnautica saves it.
         ttk.Button(parent, text="Open", width=5, command=lambda: os.startfile(target_var.get())).grid(row=1, column=3)
 
         button_frame = ttk.Frame(parent)
-        button_frame.grid(row=2, column=0, columnspan=4, sticky="w")
+        button_frame.grid(row=2, column=0, columnspan=4, sticky="ew")
 
         observer_status = 'Active' if (game == 'Subnautica' and self.observer) or (game == 'SubnauticaZero' and self.observer_bz) else 'Inactive'
         observer_label = ttk.Label(button_frame, text=f"Observer: {observer_status}")
         observer_label.pack(side=tk.LEFT)
 
-        ttk.Button(button_frame, text="Save Settings", command=lambda: self.save_game_settings(game, folder_var.get(), target_var.get())).pack(side=tk.LEFT, padx=(0, 5))
+        ttk.Button(button_frame, text="Save Settings", command=lambda: self.save_game_settings(game, folder_var.get(), target_var.get())).pack(side=tk.RIGHT, padx=(0, 5))
 
         if game == 'Subnautica':
             self.subnautica_observer_label = observer_label

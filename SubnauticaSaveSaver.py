@@ -82,7 +82,8 @@ from watchdog.events import FileSystemEventHandler
 import queue
 import pystray
 from pystray import MenuItem as item
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageTk
+import pathlib
 import threading
 import logging
 import string
@@ -101,7 +102,8 @@ logging.basicConfig(filename='subnautica_save_saver.log', level=logging.INFO,
 def global_exception_handler(exctype, value, traceback):
     logging.error("Uncaught exception", exc_info=(exctype, value, traceback))
 
-# This class to enable double-click to restore
+
+
 class Win32PystrayIcon(pystray.Icon):
     WM_LBUTTONDBLCLK = 0x0203
 
@@ -110,13 +112,30 @@ class Win32PystrayIcon(pystray.Icon):
         super().__init__(*args, **kwargs)
 
     def _on_notify(self, wparam, lparam):
+        super()._on_notify(wparam, lparam)
         if lparam == self.WM_LBUTTONDBLCLK:
             if self.on_double_click:
                 self.on_double_click(self, None)
-        return super()._on_notify(wparam, lparam)
 
 if sys.platform == 'win32':
     pystray.Icon = Win32PystrayIcon
+
+# This class to enable double-click to restore
+# class Win32PystrayIcon(pystray.Icon):
+#     WM_LBUTTONDBLCLK = 0x0203
+
+#     def __init__(self, *args, **kwargs):
+#         self.on_double_click = kwargs.pop('on_double_click', None)
+#         super().__init__(*args, **kwargs)
+
+#     def _on_notify(self, wparam, lparam):
+#         if lparam == self.WM_LBUTTONDBLCLK:
+#             if self.on_double_click:
+#                 self.on_double_click(self, None)
+#         return super()._on_notify(wparam, lparam)
+
+# if sys.platform == 'win32':
+#     pystray.Icon = Win32PystrayIcon
 
 
 # Tray helper - pystray doesn't like to redraw menus so the tray must be killed and restarted
@@ -128,43 +147,114 @@ class TrayHelper:
         self.manager = manager
         self.icon = None
 
-    def create_menu(self):
-        menu_items = [
-            item('Open Status Window', self.manager.show_status_window, default=True),
-            item('Quit', self.manager.on_quit)
-        ]
-        
-        if self.manager.subnautica_enabled:
-            menu_items.insert(-1, item('Subnautica', pystray.Menu(
-                item('Save Now', self.manager.on_save_now_subnautica),
-                item('Restore', self.manager.on_restore_subnautica),
-                item('Open Folders', self.manager.on_open_folders_subnautica)
-            )))
-        
-        if self.manager.subnautica_zero_enabled:
-            menu_items.insert(-1, item('Subnautica: Below Zero', pystray.Menu(
-                item('Save Now', self.manager.on_save_now_subnautica_zero),
-                item('Restore', self.manager.on_restore_subnautica_zero),
-                item('Open Folders', self.manager.on_open_folders_subnautica_zero)
-            )))
-        
-        return pystray.Menu(*menu_items)
 
-    def create_tray_icon(self):
-        menu = self.create_menu()
-        icon_image = self.manager.create_image()
+
+    def create_menu(self):
+        subnautica_enabled = self.manager.verify_path('subnautica_save_folder')
+        subnautica_zero_enabled = self.manager.verify_path('subnautica_zero_save_folder')
+
+        if self.manager.searching:
+            return (item('Stranded on new workd...\nSearching for save data, please wait...', lambda: None, enabled=False),)
+        else:
+            return (
+                item('Open Status Window', self.manager.show_status_window),
+                item('Subnautica', pystray.Menu(
+                    item('Save Now', self.manager.on_save_now_subnautica, enabled=subnautica_enabled),
+                    item('Restore', self.manager.on_restore_subnautica, enabled=subnautica_enabled),
+                    item('Open Folders', self.manager.on_open_folders_subnautica, enabled=subnautica_enabled)
+                )),
+                item('Subnautica: Below Zero', pystray.Menu(
+                    item('Save Now', self.manager.on_save_now_subnautica_zero, enabled=subnautica_zero_enabled),
+                    item('Restore', self.manager.on_restore_subnautica_zero, enabled=subnautica_zero_enabled),
+                    item('Open Folders', self.manager.on_open_folders_subnautica_zero, enabled=subnautica_zero_enabled)
+                )),
+                item('Quit', self.manager.on_quit)
+            )
+        
+
+    # def create_menu(self):
+    #     subnautica_enabled = self.manager.verify_path('subnautica_save_folder')
+    #     subnautica_zero_enabled = self.manager.verify_path('subnautica_zero_save_folder')
+
+    #     if self.manager.searching:
+    #         return (
+    #             item('Stranded on new workd...\nSearching for save data, please wait...', lambda: None, enabled=False),
+    #         )
+    #     else:
+    #         return (
+    #             item('Open Status Window', self.manager.show_status_window),
+    #             item('Subnautica', pystray.Menu(
+    #                 item('Save Now', self.manager.on_save_now_subnautica, enabled=subnautica_enabled),
+    #                 item('Restore', self.manager.on_restore_subnautica, enabled=subnautica_enabled),
+    #                 item('Open Folders', self.manager.on_open_folders_subnautica, enabled=subnautica_enabled)
+    #             )),
+    #             item('Subnautica: Below Zero', pystray.Menu(
+    #                 item('Save Now', self.manager.on_save_now_subnautica_zero, enabled=subnautica_zero_enabled),
+    #                 item('Restore', self.manager.on_restore_subnautica_zero, enabled=subnautica_zero_enabled),
+    #                 item('Open Folders', self.manager.on_open_folders_subnautica_zero, enabled=subnautica_zero_enabled)
+    #             )),
+    #             item('Quit', self.manager.on_quit)
+    #         )
+
+
+    # def create_menu(self):
+    #     menu_items = [
+    #         item('Open Status Window', self.manager.show_status_window, default=True),
+    #         item('Quit', self.manager.on_quit)
+    #     ]
+        
+    #     if self.manager.subnautica_enabled:
+    #         menu_items.insert(-1, item('Subnautica', pystray.Menu(
+    #             item('Save Now', self.manager.on_save_now_subnautica),
+    #             item('Restore', self.manager.on_restore_subnautica),
+    #             item('Open Folders', self.manager.on_open_folders_subnautica)
+    #         )))
+        
+    #     if self.manager.subnautica_zero_enabled:
+    #         menu_items.insert(-1, item('Subnautica: Below Zero', pystray.Menu(
+    #             item('Save Now', self.manager.on_save_now_subnautica_zero),
+    #             item('Restore', self.manager.on_restore_subnautica_zero),
+    #             item('Open Folders', self.manager.on_open_folders_subnautica_zero)
+    #         )))
+        
+    #     return pystray.Menu(*menu_items)
+
+
+    def create_tray_icon(self, menu=None):
+        icon_image = self.manager.create_image(skip_status=False)  # Include status for tray icon
         
         icon_params = {
             'name': "sk_subnautica_save_saver",
             'icon': icon_image,
-            'title': "SK's Super Stealthy\nSubnautica Save Saver",
-            'menu': menu,
+            'title': self.get_tooltip_text(),
         }
+        
+        if menu is not None:
+            icon_params['menu'] = pystray.Menu(*menu)
+        else:
+            icon_params['menu'] = pystray.Menu(item('Searching...', lambda: None, enabled=False))
         
         if sys.platform == 'win32':
             icon_params['on_double_click'] = lambda icon, item: self.manager.show_status_window()
         
         self.icon = pystray.Icon(**icon_params)
+
+
+    # def create_tray_icon(self):
+    #     menu = self.create_menu()
+    #     icon_image = self.manager.create_image()
+        
+    #     icon_params = {
+    #         'name': "sk_subnautica_save_saver",
+    #         'icon': icon_image,
+    #         'title': "SK's Super Stealthy\nSubnautica Save Saver",
+    #         'menu': menu,
+    #     }
+        
+    #     if sys.platform == 'win32':
+    #         icon_params['on_double_click'] = lambda icon, item: self.manager.show_status_window()
+        
+    #     self.icon = pystray.Icon(**icon_params)
 
 
     def recreate_tray_icon(self):
@@ -181,13 +271,29 @@ class TrayHelper:
 
     def update_menu(self):
         if self.icon:
-            self.icon.menu = self.create_menu()
+            self.icon.menu = pystray.Menu(*self.create_menu())
 
     def update_icon(self):
         if self.icon:
-            self.icon.icon = self.manager.create_image()
+            self.icon.icon = self.manager.create_image(skip_status=False)
 
 
+        
+    def update_tooltip(self):
+        if self.icon:
+            self.icon.title = self.get_tooltip_text()
+
+    def get_tooltip_text(self):
+        base_text = "SK's Super Stealthy\nSubnautica Save Saver"
+        if self.manager.searching:
+            return f"{base_text}\nSearching for save folders..."
+        
+        active_watchdogs = sum([bool(self.manager.observer), bool(self.manager.observer_bz)])
+        if active_watchdogs > 0:
+            return f"{base_text}\nActive Watchdogs: {active_watchdogs}"
+        else:
+            return f"{base_text}\nNo active watchdogs"
+        
 
 ################################################
 #                                              #
@@ -209,12 +315,31 @@ class SkSubnauticaSaveSaver:
         self.status = False
         self.subnautica_enabled = False
         self.subnautica_zero_enabled = False
+        self.searching = False
+        
+        # set main window and hide
         self.root = tk.Tk()
         self.root.withdraw()
+        
+        # set icon 
+        logging.info("Creating main icon image")
+        self.icon_image = self.create_image(skip_status=True)
+        self.icon_photo = ImageTk.PhotoImage(self.icon_image)
+        if sys.platform == 'win32':
+            logging.info("Creating .ico file for Windows")
+            ico_path = self.create_ico_file(self.icon_image)
+            self.root.iconbitmap(ico_path)
+        else:
+            self.root.iconphoto(True, self.icon_photo)
+
+
         self.status_window = None
         self.tray_helper = None
         self.event_queue = queue.Queue()
         self.root.after(100, self.process_events)
+
+        self.is_first_run = False
+        self.search_completed = False
 
 
         for directory in [self.saves_dir, self.saves_dir_bz]:
@@ -225,37 +350,75 @@ class SkSubnauticaSaveSaver:
         self.style = ttk.Style()
         self.style.theme_use('xpnative')
 
-    def create_image(self):
-            """Create the tray icon image with status indicator."""
-            width = 64
-            height = 64
-            image = Image.new('RGB', (width, height), (64, 224, 208))  # Turquoise blue color
-            draw = ImageDraw.Draw(image)
-            
-            # Define the points for each segment of the 'S' with corrected coordinates
-            segments = [
-                [(49, 15), (19, 15), (19, 25), (49, 25)],  # Segment 1 (top horizontal bar)
-                [(9, 25), (19, 25), (19, 35), (9, 35)],    # Segment 2 (top-left vertical bar)
-                [(19, 35), (49, 35), (49, 45), (19, 45)],  # Segment 3 (middle horizontal bar)
-                [(49, 45), (39, 45), (39, 55), (49, 55)],  # Segment 4 (bottom-right vertical bar)
-                [(39, 55), (9, 55), (9, 65), (39, 65)],    # Segment 5 (bottom horizontal bar)
-            ]
-            
-            # Draw each segment of the 'S' filled with purple color
-            for segment in segments:
-                draw.polygon(segment, fill=(128, 0, 128))
-            
-            # Add status indicator in the upper right corner
-            indicator_color = (0, 255, 0) if self.status else (255, 0, 0)
-            draw.rectangle([width-15, 0, width, 15], fill=indicator_color)
-            
-            return image
+    def create_image(self, skip_status=False):
+        """Create the tray icon image with status indicator."""
+        width = 64
+        height = 64
+        image = Image.new('RGB', (width, height), (64, 224, 208))  # Turquoise blue color
+        draw = ImageDraw.Draw(image)
+        
+        # Define the points for each segment of the 'S' with corrected coordinates
+        segments = [
+            [(49, 15), (19, 15), (19, 25), (49, 25)],  # Segment 1 (top horizontal bar)
+            [(9, 25), (19, 25), (19, 35), (9, 35)],    # Segment 2 (top-left vertical bar)
+            [(19, 35), (49, 35), (49, 45), (19, 45)],  # Segment 3 (middle horizontal bar)
+            [(49, 45), (39, 45), (39, 55), (49, 55)],  # Segment 4 (bottom-right vertical bar)
+            [(39, 55), (9, 55), (9, 65), (39, 65)],    # Segment 5 (bottom horizontal bar)
+        ]
+        
+        # Draw each segment of the 'S' filled with purple color
+        for segment in segments:
+            draw.polygon(segment, fill=(128, 0, 128))
 
-    def update_icon_status(self):
+        # Add status indicator only if not skipped
+        if not skip_status:
+            indicator_color = self.get_indicator_color()
+            draw.rectangle([width-15, 0, width, 15], fill=indicator_color)
+            logging.info("Created image with status indicator")
+        else:
+            logging.info("Created image without status indicator")
+        
+        return image
+
+    def create_ico_file(self, image=None):
+        ico_path = os.path.join(self.app_directory, "app_icon.ico")
+        if not os.path.exists(ico_path):
+            logging.info("Creating new .ico file")
+            img = image if image else self.create_image(skip_status=True)
+            img.save(ico_path, format="ICO", sizes=[(32, 32)])
+        else:
+            logging.info("Using existing .ico file")
+        return ico_path
+
+    def get_indicator_color(self):
+        if self.searching:
+            # Blinking red and green while searching (if possible)
+            # You can implement the blinking logic here, alternating between red and green
+            # For simplicity, let's set it to red during the search
+            return (255, 0, 0)
+        else:
+            # Red if there are no active watchdogs, green if there is at least one
+            return (0, 255, 0) if self.observer or self.observer_bz else (255, 0, 0)
+        
+    def update_tray_icon(self):
         self.status = bool(self.observer or self.observer_bz)
         if self.tray_helper:
             self.tray_helper.update_icon()
-            
+            self.tray_helper.update_tooltip()
+
+    def update_icon_status(self):
+        if self.searching:
+            # Blinking red and green while searching (if possible)
+            # You can implement the blinking logic here, alternating between red and green
+            # For simplicity, let's set it to red during the search
+            indicator_color = (255, 0, 0)
+        else:
+            # Red if there are no active watchdogs, green if there is at least one
+            indicator_color = (0, 255, 0) if self.observer or self.observer_bz else (255, 0, 0)
+        
+        # Update the tray icon with the new indicator color
+        self.tray_helper.update_icon()
+
     def process_events(self):
         try:
             while True:
@@ -297,7 +460,6 @@ class SkSubnauticaSaveSaver:
                 self.tray_helper.icon.stop()
             raise
 
-
     def start(self):
         try:
             logging.info("Starting SkSubnauticaSaveSaver")
@@ -305,29 +467,58 @@ class SkSubnauticaSaveSaver:
             self.tray_helper = TrayHelper(self)
             
             if not self.settings_are_valid():
-                self.create_initial_tray_icon()
+                self.is_first_run = True
+                self.tray_helper.create_tray_icon(menu=None)  # No menu during search
+                threading.Thread(target=self.tray_helper.run_tray_icon, daemon=True).start()
                 self.show_first_run_warning()
                 self.search_and_set_paths()
+            else:
+                self.tray_helper.create_tray_icon()
+                threading.Thread(target=self.tray_helper.run_tray_icon, daemon=True).start()
             
             self.verify_and_start_observer()
-            self.tray_helper.create_tray_icon()
-            
-            threading.Thread(target=self.tray_helper.run_tray_icon, daemon=True).start()
-            
             logging.info("Startup complete")
-            if not self.silent_mode:
-                self.create_status_window()
+
+            if not self.silent_mode or self.is_first_run:
+                self.root.after(100, self.show_status_window)  # Ensure status window is shown after startup
+            
             self.root.withdraw()
             self.root.mainloop()
         except Exception as e:
             logging.error(f"Error during startup: {str(e)}")
-            if self.tray_helper:
+            if self.tray_helper and self.tray_helper.icon:
                 self.tray_helper.stop_tray_icon()
             raise
 
+    # def start(self):
+    #     try:
+    #         logging.info("Starting SkSubnauticaSaveSaver")
+    #         self.settings = self.load_settings()
+    #         self.tray_helper = TrayHelper(self)
+            
+    #         if not self.settings_are_valid():
+    #             self.create_initial_tray_icon()
+    #             self.show_first_run_warning()
+    #             self.search_and_set_paths()
+            
+    #         self.verify_and_start_observer()
+    #         self.tray_helper.create_tray_icon()
+            
+    #         threading.Thread(target=self.tray_helper.run_tray_icon, daemon=True).start()
+            
+    #         logging.info("Startup complete")
+    #         if not self.silent_mode:
+    #             self.create_status_window()
+    #         self.root.withdraw()
+    #         self.root.mainloop()
+    #     except Exception as e:
+    #         logging.error(f"Error during startup: {str(e)}")
+    #         if self.tray_helper:
+    #             self.tray_helper.stop_tray_icon()
+    #         raise
+
     def show_first_run_warning(self):
-        if not self.silent_mode or not self.settings_are_valid():
-            messagebox.showinfo("Subnautica Save Saver", "Welcome! The application will now search for Subnautica save folders. Please wait...")
+        messagebox.showinfo("Subnautica Save Saver", "Welcome! The application will now search for Subnautica save folders. Please wait...")
             
     def create_initial_tray_icon(self):
         self.tray_helper.create_tray_icon()
@@ -380,14 +571,47 @@ class SkSubnauticaSaveSaver:
                (self.settings.get('subnautica_zero_save_folder') and os.path.exists(self.settings['subnautica_zero_save_folder']))
 
     def search_and_set_paths(self):
-        self.settings['subnautica_save_folder'] = self.detect_save_path('Subnautica')
-        self.settings['subnautica_zero_save_folder'] = self.detect_save_path('SubnauticaZero')
+        self.searching = True
+        self.tray_helper.update_icon()
+        self.tray_helper.update_tooltip()
+
+        subnautica_path = self.detect_save_path('Subnautica')
+        subnautica_zero_path = self.detect_save_path('SubnauticaZero')
+
+        self.settings['subnautica_save_folder'] = subnautica_path
+        self.settings['subnautica_zero_save_folder'] = subnautica_zero_path
         self.save_settings()
         
-        if self.settings['subnautica_save_folder'] or self.settings['subnautica_zero_save_folder']:
-            messagebox.showinfo("Search Complete", "Subnautica save folders have been found and set.")
+        self.searching = False
+        self.search_completed = True
+        self.tray_helper.update_icon()
+        self.tray_helper.update_tooltip()
+        self.tray_helper.recreate_tray_icon()  # Recreate with proper menu
+
+        message = "Search completed. "
+        if subnautica_path or subnautica_zero_path:
+            message += f"Subnautica save folders have been found and set.\n"
+            if subnautica_path:
+                message += f"Subnautica: {subnautica_path}\n"
+            if subnautica_zero_path:
+                message += f"Subnautica Below Zero: {subnautica_zero_path}\n"
         else:
-            messagebox.showwarning("Search Complete", "No Subnautica save folders were found. Please set them manually in the Settings.")
+            message += "No Subnautica save folders were found. Please set them manually in the Settings."
+        
+        logging.info(message)
+        self.show_status_window()  # Show status window before the message box
+        messagebox.showinfo("Search Complete", message)
+
+
+    # def search_and_set_paths(self):
+    #     self.settings['subnautica_save_folder'] = self.detect_save_path('Subnautica')
+    #     self.settings['subnautica_zero_save_folder'] = self.detect_save_path('SubnauticaZero')
+    #     self.save_settings()
+        
+    #     if self.settings['subnautica_save_folder'] or self.settings['subnautica_zero_save_folder']:
+    #         messagebox.showinfo("Search Complete", "Subnautica save folders have been found and set.")
+    #     else:
+    #         messagebox.showwarning("Search Complete", "No Subnautica save folders were found. Please set them manually in the Settings.")
 
 
 
@@ -441,55 +665,122 @@ class SkSubnauticaSaveSaver:
         self.tray_helper.recreate_tray_icon()
         self.update_observer_status()
         messagebox.showinfo("Settings Saved", f"{game} settings have been saved and applied.")
-        
+
+
     def detect_save_path(self, game_name):
-        save_paths = self.find_subnautica_saves(game_name)
-        if save_paths:
-            if len(save_paths) == 1:
-                logging.info(f"Detected {game_name} save path: {save_paths[0]}")
-                return save_paths[0]
-            else:
-                logging.info(f"Multiple {game_name} save paths detected: {save_paths}")
-                return self.prompt_user_for_path_selection(save_paths, game_name)
-        logging.warning(f"No valid {game_name} save path detected")
-        return self.prompt_manual_folder_selection(game_name)
+        search_pattern = "Subnautica/SNAppData/SavedGames" if game_name == "Subnautica" else "SubnauticaZero/SNAppData/SavedGames"
+        
+        logging.info(f"Searching for {game_name} save folder")
+
+        # Get all available drives
+        drives = win32api.GetLogicalDriveStrings()
+        drives = drives.split('\000')[:-1]
+
+        for drive in drives:
+            drive_path = pathlib.Path(drive)
+            logging.info(f"Searching drive: {drive_path}")
+            try:
+                for path in drive_path.rglob(search_pattern):
+                    if path.is_dir():
+                        logging.info(f"Found {game_name} save folder: {path}")
+                        return str(path)
+            except PermissionError:
+                logging.warning(f"Permission denied while searching {drive_path}")
+            except Exception as e:
+                logging.error(f"Error while searching {drive_path}: {str(e)}")
+
+        logging.warning(f"No {game_name} save folder found")
+        return None
+
+    # def detect_save_path(self, game_name):
+    #     search_pattern = "Subnautica/SNAppData/SavedGames" if game_name == "Subnautica" else "SubnauticaZero/SNAppData/SavedGames"
+        
+    #     logging.info(f"Searching for {game_name} save folder")
+
+    #     for drive in pathlib.Path('/').glob('*'):
+    #         if drive.is_dir():
+    #             logging.info(f"Searching drive: {drive}")
+    #             try:
+    #                 for path in drive.rglob(search_pattern):
+    #                     if path.is_dir():
+    #                         logging.info(f"Found {game_name} save folder: {path}")
+    #                         return str(path)
+    #             except PermissionError:
+    #                 logging.warning(f"Permission denied while searching {drive}")
+    #             except Exception as e:
+    #                 logging.error(f"Error while searching {drive}: {str(e)}")
+
+    #     logging.warning(f"No {game_name} save folder found")
+    #     return None
+
+    # def detect_save_path(self, game_name):
+    #     save_paths = self.find_subnautica_saves(game_name)
+    #     if save_paths:
+    #         if len(save_paths) == 1:
+    #             logging.info(f"Detected {game_name} save path: {save_paths[0]}")
+    #             return save_paths[0]
+    #         else:
+    #             logging.info(f"Multiple {game_name} save paths detected: {save_paths}")
+    #             return self.prompt_user_for_path_selection(save_paths, game_name)
+    #     logging.warning(f"No valid {game_name} save path detected")
+    #     return self.prompt_manual_folder_selection(game_name)
 
 
     def find_subnautica_saves(self, game_name):
         potential_paths = []
-        default_paths = []
+        search_pattern = "Subnautica/SNAppData/SavedGames" if game_name == "Subnautica" else "SubnauticaZero/SNAppData/SavedGames"
 
-        if game_name == "Subnautica":
-            default_paths = [
-                # os.path.expandvars(r"%AppData%\..\LocalLow\Unknown Worlds\Subnautica\Subnautica\SavedGames"),
-                r"C:\Program Files\Steam\steamapps\common\Subnautica\SNAppData\SavedGames",
-                r"C:\Program Files (x86)\Steam\steamapps\common\Subnautica\SNAppData\SavedGames"
-            ]
-        elif game_name == "SubnauticaZero":
-            default_paths = [
-                # os.path.expandvars(r"%AppData%\..\LocalLow\Unknown Worlds\SubnauticaZero\SubnauticaZero\SavedGames"),
-                r"C:\Program Files\Steam\steamapps\common\SubnauticaZero\SNAppData\SavedGames",
-                r"C:\Program Files (x86)\Steam\steamapps\common\SubnauticaZero\SNAppData\SavedGames"
-            ]
+        for drive in pathlib.Path('/').glob('*'):
+            if drive.is_dir():
+                logging.info(f"Searching drive: {drive}")
+                for path in drive.rglob(search_pattern):
+                    if path.is_dir():
+                        potential_paths.append(str(path))
+                        logging.info(f"Found potential save path: {path}")
 
-        potential_paths.extend(default_paths)
+        logging.info(f"Valid save paths found for {game_name}: {potential_paths}")
+        return potential_paths
+    
+    # def find_subnautica_saves(self, game_name):
+    #     potential_paths = []
+    #     default_paths = []
 
-        drives = [f"{d}:\\" for d in string.ascii_uppercase if os.path.exists(f"{d}:")]
+    #     if game_name == "Subnautica":
+    #         default_paths = [
+    #             # os.path.expandvars(r"%AppData%\..\LocalLow\Unknown Worlds\Subnautica\Subnautica\SavedGames"),
+    #             r"C:\Program Files\Steam\steamapps\common\Subnautica\SNAppData\SavedGames",
+    #             r"C:\Program Files (x86)\Steam\steamapps\common\Subnautica\SNAppData\SavedGames"
+    #         ]
+    #     elif game_name == "SubnauticaZero":
+    #         default_paths = [
+    #             # os.path.expandvars(r"%AppData%\..\LocalLow\Unknown Worlds\SubnauticaZero\SubnauticaZero\SavedGames"),
+    #             r"C:\Program Files\Steam\steamapps\common\SubnauticaZero\SNAppData\SavedGames",
+    #             r"C:\Program Files (x86)\Steam\steamapps\common\SubnauticaZero\SNAppData\SavedGames"
+    #         ]
 
-        for drive in drives:
-            for root, dirs, files in os.walk(drive):
-                if any(game_dir in root.lower() for game_dir in ["games", "steam"]):
-                    subnautica_path = os.path.join(root, game_name)
-                    if os.path.exists(subnautica_path):
-                        saved_games_path = os.path.join(subnautica_path, "SNAppData", "SavedGames")
-                        if os.path.exists(saved_games_path):
-                            potential_paths.append(saved_games_path)
+    #     potential_paths.extend(default_paths)
 
-                if root.count(os.sep) - drive.count(os.sep) > 5:
-                    dirs[:] = []
+    #     # Detect available drives
+    #     drives = [f"{d}:\\" for d in string.ascii_uppercase if os.path.exists(f"{d}:")]
 
-        valid_paths = [path for path in potential_paths if os.path.exists(path)]
-        return valid_paths
+    #     for drive in drives:
+    #         logging.info(f"Searching drive: {drive}")
+    #         for root, dirs, files in os.walk(drive):
+    #             if any(game_dir in root.lower() for game_dir in ["games", "steam", "epic games", "gog games"]):
+    #                 subnautica_path = os.path.join(root, game_name)
+    #                 if os.path.exists(subnautica_path):
+    #                     saved_games_path = os.path.join(subnautica_path, "SNAppData", "SavedGames")
+    #                     if os.path.exists(saved_games_path):
+    #                         potential_paths.append(saved_games_path)
+    #                         logging.info(f"Found potential save path: {saved_games_path}")
+
+    #             # Limit search depth to avoid excessive searching
+    #             if root.count(os.sep) - drive.count(os.sep) > 5:
+    #                 dirs[:] = []  # Clear dirs list to prevent further descent
+
+    #     valid_paths = [path for path in potential_paths if os.path.exists(path)]
+    #     logging.info(f"Valid save paths found for {game_name}: {valid_paths}")
+    #     return valid_paths
 
 
     def prompt_user_for_path_selection(self, paths, game_name):
@@ -539,7 +830,8 @@ class SkSubnauticaSaveSaver:
         self.subnautica_zero_enabled = subnautica_zero_enabled
 
         self.update_observer_status()
-        self.update_tray_icon()
+        if self.tray_helper:
+            self.tray_helper.update_tooltip()
 
     def stop_observer(self, game):
         if game == 'Subnautica' and self.observer:
@@ -582,6 +874,8 @@ class SkSubnauticaSaveSaver:
             self.observer_bz = observer
 
         self.update_icon_status()
+        if self.tray_helper:
+            self.tray_helper.update_tooltip()
 
     def start_watching_directory(self, directory):
         for observer in [self.observer, self.observer_bz]:
@@ -623,6 +917,17 @@ class SkSubnauticaSaveSaver:
         # Add event to queue for updating log in status window
         if hasattr(self, 'event_queue'):
             self.event_queue.put(('log', f"Manual save completed for {game_name}. Saved slots: {', '.join(saved_slots)}"))
+
+    def backup_slot(self, slot_path, source_folder, target_folder, timestamp):
+        rel_path = os.path.relpath(slot_path, source_folder)
+        backup_path = os.path.join(target_folder, f"{rel_path}_{timestamp}")
+        
+        try:
+            shutil.copytree(slot_path, backup_path)
+            logging.info(f"Backed up {slot_path} to {backup_path}")
+        except Exception as e:
+            logging.error(f"Failed to backup {slot_path}: {str(e)}")
+            raise
 
     def restore_save(self, game, save_file):
         logging.info(f"Restore initiated for {game}: {save_file}")
@@ -874,14 +1179,16 @@ changes to player.log, and copies it when Subnautica saves it.
 
 
     def create_status_window(self):
-        if self.status_window is not None and self.status_window.winfo_exists():
-            self.status_window.lift()
-            return
-
         self.status_window = tk.Toplevel(self.root)
         self.status_window.title("SK's Super Stealthy Subnautica Save Saver Status")
         self.status_window.geometry("800x600")
         self.status_window.protocol("WM_DELETE_WINDOW", self.hide_status_window)
+
+        # Use the same icon as the main window (without status pixels)
+        if sys.platform == 'win32':
+            self.status_window.iconbitmap(self.create_ico_file(self.icon_image))
+        else:
+            self.status_window.iconphoto(False, self.icon_photo)
 
         # Configure grid
         self.status_window.grid_columnconfigure(0, weight=1)

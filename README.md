@@ -1,75 +1,70 @@
-# SK's Super Stealthy Subnautica Save Saver
+# SK's Super Stealthy Subnautica Save Saver (SSSSSS)
 
-## Introduction
-"SK's Super Stealthy Subnautica Save Saver" is a Python application designed to monitor and back up Subnautica save files automatically. This ensures that your progress is always safe, even if something goes wrong, and removes the tediousness of digging around in the folders and copying stuff yourself.
+## Overview
+
+SSSSSS is a Python application designed to automatically backup save files for Subnautica and Subnautica: Below Zero. It runs quietly in the system tray, providing peace of mind for your underwater adventures.
 
 ## Features
-- **Automatic Backup**: Monitors the Subnautica save folder and automatically backs up your saves.
-- **System Tray Integration**: Runs in the background with an icon in the system tray for easy access.
-- **Customizable Folders**: Easily set the Subnautica save folder and the backup target folder.
+
+- Automatic backup of save files when changes are detected
+- Manual save and restore options
+- Easy-to-use system tray interface
+- Detailed status window for information and settings
 
 ## Installation
 
-### Prerequisites
-- Python 3.6 or later
-- `pip` (Python package installer)
-
-### Steps
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/sb4ssman/SubnauticaSaveSaver.git
-    cd SubnauticaSaveSaver
-    ```
-2. Create and activate a virtual environment:
-    ```sh
-    python -m venv venv
-    venv\Scripts\activate
-    ```
-3. Install the required packages:
-    ```sh
-    pip install -r requirements.txt
-    ```
-
-4. Run the application:
-    ```sh
-    python SubnauticaSaveSaver.py
-    ```
+1. Ensure Python 3.6 or later is installed on your system.
+2. Place `SubnauticaSaveSaver.py` and `autoSSSSSS.bat` in your desired location.
+3. Run `autoSSSSSS.bat` to start the application silently in the background.
 
 ## Usage
 
-### Running on Startup
+- The application runs in the system tray. Right-click the icon for options.
+- On first run, it will search for Subnautica save folders and set up necessary backup directories.
+- Use the status window (accessible via the tray icon) to adjust settings and view backup information.
 
-1. Create a batch file (`run_app.bat`) with the following content (included):
+## File Management
 
-    ```batch
-    @echo off
+- Backup folders are created in the same directory as the script.
+- The application only modifies files within these backup folders and the game's save directories.
+- A `settings.json` file is created in the application directory to store configuration.
 
-    rem Change directory to where your Python script is located
-    cd /d "%USERPROFILE%\Documents\GitHub\SubnauticaSaveSaver"
+## Logging
 
-    rem Ensure the log directory exists
-    if not exist logs mkdir logs
+- A log file (`subnautica_save_saver.log`) is maintained in the application directory for troubleshooting.
 
-    rem Run Python script in the background and redirect output to a log file
-    start /B "" pythonw SubnauticaSaveSaver.py > logs\app.log 2>&1
+## Note
 
-    rem Exit the batch script without waiting for the Python script to finish
-    exit /b
-    ```
+Ensure the application has appropriate permissions to read from and write to the game save directories and its own directory.
 
-2. Place the batch file in your startup folder (or anywhere as a proxy to run the Saver):
-    - Press `Win + R`, type `shell:startup`, and press Enter.
-    - Copy the `run_app.bat` file into this folder.
+## autoSSSSSS.bat
 
-### Configuring the Application
+This batch file is included to run the application silently on startup. It:
 
-1. When you run the application for the first time, it will create a default settings file and backup directory.
-2. Edit the settings file (`settings.json`) in the application directory to specify your Subnautica save folder and the target backup folder.
+1. Changes to the directory where the script is located.
+2. Creates a 'logs' folder if it doesn't exist.
+3. Runs the Python script in the background, redirecting output to a log file.
 
-## Contribution
+To use it for automatic startup:
 
-Feel free to fork this repository, create new features, fix bugs, or improve documentation. Pull requests are welcome.
+1. Press `Win + R`, type `shell:startup`, and press Enter.
+2. Create a shortcut to `autoSSSSSS.bat` in this folder.
+
+This will ensure SSSSSS starts automatically when you log in to Windows.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[MIT License](LICENSE)
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/yourusername/SSSSSS/issues) if you want to contribute.
+
+## Author
+
+- **SK4Ssman** - [GitHub Profile](https://github.com/yourusername)
+
+## Acknowledgments
+
+- Thanks to the Subnautica community for inspiring this project.
+- Special thanks to Sk for requesting it.

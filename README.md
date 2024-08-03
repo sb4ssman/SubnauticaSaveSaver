@@ -15,6 +15,7 @@ SSSSSS is a Python application designed to automatically backup save files for S
 
 1. Ensure Python 3.6 or later is installed on your system.
 2. Place `SubnauticaSaveSaver.py` and `autoSSSSSS.bat` in your desired location.
+    -pip install -r requirements.txt (as necessary)
 3. Run `autoSSSSSS.bat` to start the application silently in the background.
 
 ## Usage
@@ -58,11 +59,11 @@ This will ensure SSSSSS starts automatically when you log in to Windows.
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/yourusername/SSSSSS/issues) if you want to contribute.
+Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/sb4ssman/SubnauticaSaveSaver/issues) if you want to contribute.
 
 ## Author
 
-- **SK4Ssman** - [GitHub Profile](https://github.com/yourusername)
+- **sb4ssman** - [GitHub Profile](https://github.com/sb4ssman/
 
 ## Acknowledgments
 

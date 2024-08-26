@@ -3,7 +3,7 @@ settings.json
 subnautica_save_saver.log
 /Subnautica-SavedGames-Backup/
 /SubnauticaBelowZero-SavedGames-Backup/
-
+/scraps/
 
 # Python
 Tools/__pycache__/__init__.cpython-312.pyc

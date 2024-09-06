@@ -927,7 +927,7 @@ changes to player.log, and copies it when Subnautica saves it.
         tree.heading("date", text="Date and Time", anchor="center")
         tree.column("file", width=200, anchor="center")
         tree.column("date", width=200, anchor="center")
-        tree.grid(row=row, column=column, sticky="nsew", padx=(0, 5))
+        tree.grid(row=row, column=column, sticky="nsew", padx=(0, 0))
 
         scrollbar = ttk.Scrollbar(parent, orient="vertical", command=tree.yview)
         scrollbar.grid(row=row, column=column+1, sticky="ns")
@@ -1119,10 +1119,10 @@ changes to player.log, and copies it when Subnautica saves it.
         parent.grid_rowconfigure(0, weight=1)
 
         self.log_text = tk.Text(parent, wrap="word", height=10)
-        self.log_text.grid(row=0, column=0, sticky="nsew", padx=(0, 5), pady=(0, 5))
+        self.log_text.grid(row=0, column=0, sticky="nsew", padx=(0, 0), pady=(0, 0))
         
         scrollbar = ttk.Scrollbar(parent, orient="vertical", command=self.log_text.yview)
-        scrollbar.grid(row=0, column=1, sticky="ns", pady=(0, 5))
+        scrollbar.grid(row=0, column=1, sticky="ns", pady=(0, 0))
         self.log_text.config(yscrollcommand=scrollbar.set)
 
         # Load initial log content

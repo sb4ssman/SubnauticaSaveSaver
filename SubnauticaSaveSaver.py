@@ -67,22 +67,21 @@ import win32api
 import win32gui
 import win32con
 
+from ToolTips import createToolTip
 
-
-
-
-
+# Get the directory of the script
+app_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Set up logging
-logging.basicConfig(filename='subnautica_save_saver.log', level=logging.INFO,
+log_file = os.path.join(app_directory, 'subnautica_save_saver.log')
+logging.basicConfig(filename=log_file, level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Global exception handling
 def global_exception_handler(exctype, value, traceback):
     logging.error("Uncaught exception", exc_info=(exctype, value, traceback))
 
-
-
+sys.excepthook = global_exception_handler
 
 
 
@@ -218,8 +217,9 @@ class TrayHelper:
 class SkSubnauticaSaveSaver:
     def __init__(self, silent_mode=False):
         self.silent_mode = silent_mode
-        self.app_directory = os.path.dirname(os.path.abspath(__file__))
+        self.app_directory = app_directory  # Use the already defined app_directory
         self.settings_file = os.path.join(self.app_directory, 'settings.json')
+        self.log_file = log_file  # Use the already defined log_file
         self.saves_dir = os.path.join(self.app_directory, "Subnautica-SavedGames-Backup")
         self.saves_dir_bz = os.path.join(self.app_directory, "SubnauticaBelowZero-SavedGames-Backup")
         self.settings = None
@@ -1203,8 +1203,6 @@ class SaveHandler(FileSystemEventHandler):
                     logging.error(error_message)
 
 
-
-# if name == main
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Subnautica Save Saver")

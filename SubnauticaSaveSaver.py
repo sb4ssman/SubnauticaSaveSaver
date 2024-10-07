@@ -565,12 +565,28 @@ class SkSubnauticaSaveSaver:
             self.tray_helper.update_icon()
             self.tray_helper.update_menu()
 
+    def show_status_window(self):
+        if self.status_window is None or not self.status_window.winfo_exists():
+            self.create_status_window()
+        self.status_window.deiconify()
+        self.status_window.lift()
+
+    def hide_status_window(self):
+        if self.status_window:
+            self.status_window.withdraw()
+            
     def cleanup(self):
         logging.info("Cleaning up observers")
         self.stop_observer('Subnautica')
         self.stop_observer('SubnauticaZero')
         logging.info("Cleanup complete")
-        
+
+    def quit_application(self):
+        # NO on optional messagebox
+        # if messagebox.askyesno("Quit", "Are you sure you want to quit?"):
+        #     self.on_quit(None, None)
+        self.on_quit(None, None)
+            
     def on_quit(self, icon, item):
         logging.info("Quitting application")
         self.cleanup()
@@ -634,10 +650,6 @@ class SkSubnauticaSaveSaver:
         self.show_status_window()  # Show status window before the message box
         messagebox.showinfo("Search Complete", message)
 
-
-
-
-
     def detect_save_path(self, game_name):
         search_pattern = "Subnautica/SNAppData/SavedGames" if game_name == "Subnautica" else "SubnauticaZero/SNAppData/SavedGames"
         
@@ -688,8 +700,6 @@ class SkSubnauticaSaveSaver:
     def verify_path(self, key):
         path = self.settings.get(key)
         return path is not None and os.path.exists(path)
-
-
 
     def save_now(self, game_name):
         logging.info(f"Manual save initiated for {game_name}")
@@ -794,27 +804,6 @@ class SkSubnauticaSaveSaver:
 
     def on_restore_subnautica_zero(self, icon, item):
         self.root.after(0, lambda: self.open_restore_window('SubnauticaZero'))
-
-    def show_status_window(self):
-        if self.status_window is None or not self.status_window.winfo_exists():
-            self.create_status_window()
-        self.status_window.deiconify()
-        self.status_window.lift()
-
-    def hide_status_window(self):
-        if self.status_window:
-            self.status_window.withdraw()
-
-    def on_quit(self, icon, item):
-        logging.info("Quitting application")
-        if self.observer:
-            self.observer.stop()
-        if self.observer_bz:
-            self.observer_bz.stop()
-        if self.tray_helper:
-            self.tray_helper.stop_tray_icon()
-        self.root.quit()
-        self.root.destroy()
 
     def duplicate_latest_save(self):
         """Duplicate the latest save file."""
@@ -966,16 +955,6 @@ changes to player.log, and copies it when Subnautica saves it.
         else:
             messagebox.showinfo("No Selection", "Please select a save file to restore.")
 
-    # Update these methods in the SkSubnauticaSaveSaver class
-    def show_status_window(self):
-        if self.status_window is None or not self.status_window.winfo_exists():
-            self.create_status_window()
-        self.status_window.deiconify()
-        self.status_window.lift()
-
-    def hide_status_window(self):
-        if self.status_window:
-            self.status_window.withdraw()
 
 
 
@@ -990,6 +969,22 @@ changes to player.log, and copies it when Subnautica saves it.
             self.status_window.iconbitmap(self.create_ico_file(self.icon_image))
         else:
             self.status_window.iconphoto(False, self.icon_photo)
+
+        # Create menu bar
+        menubar = tk.Menu(self.status_window)
+        self.status_window.config(menu=menubar)
+
+        # File menu
+        file_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="File", menu=file_menu)
+        file_menu.add_command(label="Minimize to Tray", command=self.hide_status_window)
+        file_menu.add_separator()
+        file_menu.add_command(label="Quit", command=self.quit_application)
+
+        # Help menu
+        help_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Help", menu=help_menu)
+        help_menu.add_command(label="About", command=self.show_about_dialog)
 
         # Configure grid
         self.status_window.grid_columnconfigure(0, weight=1)
@@ -1126,7 +1121,7 @@ changes to player.log, and copies it when Subnautica saves it.
         self.log_text.config(yscrollcommand=scrollbar.set)
 
         # Load initial log content
-        log_file_path = 'subnautica_save_saver.log'
+        log_file_path = os.path.join(self.app_directory, 'subnautica_save_saver.log')
         if os.path.exists(log_file_path):
             with open(log_file_path, 'r') as log_file:
                 log_content = log_file.read()

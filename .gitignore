@@ -1,20 +1,19 @@
 # Saver Specific
 settings.json
 subnautica_save_saver.log
-/Subnautica-SavedGames-Backup/
-/SubnauticaBelowZero-SavedGames-Backup/
-/scraps/
+Subnautica-SavedGames-Backup/
+SubnauticaBelowZero-SavedGames-Backup/
+scraps/
+logs/
 
 # Python
-Tools/__pycache__/__init__.cpython-312.pyc
-__pycache__/__init__.cpython-312.pyc
-/__pycache__/
-\__pycache__\
-__pycache__
+__pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+
+
 
 # Virtual environments
 venv/
@@ -27,6 +26,7 @@ env/
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
 
 # Logs and databases
 *.log
@@ -41,8 +41,10 @@ build/
 dist/
 *.egg-info/
 
-# Personal or sensitive files
-.env
-credentials.json
+# Github folders and files
+.git
+.github
+
+
 
 
